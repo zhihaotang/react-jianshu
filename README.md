@@ -21,11 +21,21 @@
 
 1. 安装 redux和react-redux
 
-安装 redux `yarn add redux`
-安装 react-redux `yarn add react-redux `
+安装 redux 
+
+```bash
+$ yarn add redux
+```
+
+安装 react-redux 
+
+```bash
+$ yarn add react-redux
+```
 
 2. 在src下创建store文件夹，并新建index.js:
-```
+
+```javascript
     import { createStore } from 'redux';
     import reducer from './reducer.js'
     const store =createStore(reducer);//reducer当参数
@@ -33,44 +43,51 @@
 ```
 
 3. store 文件夹下新建 reducer.js 并声明各组件所需 state 中的变量(可以在不同的组件下创建不同的store,在总的reducer组合起来)
-    1. 组合组件的reducer
-```
-        import { combineReducers} from 'redux-immutable';
-        import {reducer as headerReducer} from '../common/header/store';
-        import {reducer as homeReducer} from '../pages/home/store';
-        import {reducer as detailReducer} from '../pages/detail/store';
-        import {reducer as loginReducer} from '../pages/login/store';
+- 组合组件的reducer
 
-        const reducer = combineReducers({
-            header:headerReducer,
-            home: homeReducer,
-            detail:detailReducer,
-            login:loginReducer
-        })
-        export default reducer;
+```javascript
+    import { combineReducers} from 'redux-immutable';
+    import {reducer as headerReducer} from '../common/header/store';
+    import {reducer as homeReducer} from '../pages/home/store';
+    import {reducer as detailReducer} from '../pages/detail/store';
+    import {reducer as loginReducer} from '../pages/login/store';
+
+    const reducer = combineReducers({
+        header:headerReducer,
+        home: homeReducer,
+        detail:detailReducer,
+        login:loginReducer
+    })
+    export default reducer;
 ```
 
-    2. 同用一个reducer
+- 同用一个reducer
+
+```javascript
+    const defaultState = {
+        inputValue: '',
+        list:[1,2],
+        showMsg:false
+    }
+    export default (state = defaultState,action)=>{
+        return state;
+    }
 ```
-        const defaultState = {
-            inputValue: '',
-            list:[1,2],
-            showMsg:false
-        }
-        export default (state = defaultState,action)=>{
-            return state;
-        }
-```
+
 4. 使用react-redux连接redux
-    1. 在src下面的index.js用react-redux自带组件包裹App组件，传递store
-```
+
+- 在src下面的index.js用react-redux自带组件包裹App组件，传递store\
+
+```javascript
         import {Provider} from 'react-redux';
         <Provider store ={store}>
         <App></App>
         </Provider>
 ```
-    2. 在需要使用state的component里面使用react-redux的connct方法连接store 和监听，如下
-```
+
+- 在需要使用state的component里面使用react-redux的connct方法连接store 和监听，如下
+
+```javascript
         import {connect} from 'react-redux';
         const mapState = (state) =>(
             {
@@ -99,50 +116,12 @@
 ```
 
 5. 在组件里面使用 state 和dispatch
+
+```javascript
+    // 使用state:
+    this.props.xxxx  
+    // 同理使用dispatch: 
+    this.props.xxxxx
 ```
-    使用state:this.props.xxxx 
-    同理使用dispatch:this.props.xxxxx
-```
 
 
-
-
----
-<br/>
-<br/>
-
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
