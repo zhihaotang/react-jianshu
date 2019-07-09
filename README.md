@@ -25,72 +25,86 @@
 安装 react-redux `yarn add react-redux `
 
 2. 在src下创建store文件夹，并新建index.js:
-    `import { createStore } from 'redux';
-    `import reducer from './reducer.js'
-    `const store =createStore(reducer);//reducer当参数
-    `export default store;
+```
+    import { createStore } from 'redux';
+    import reducer from './reducer.js'
+    const store =createStore(reducer);//reducer当参数
+    export default store;
+```
 
 3. store 文件夹下新建 reducer.js 并声明各组件所需 state 中的变量(可以在不同的组件下创建不同的store,在总的reducer组合起来)
     1. 组合组件的reducer
-        `import { combineReducers} from 'redux-immutable';
-        `import {reducer as headerReducer} from '../common/header/store';
-        `import {reducer as homeReducer} from '../pages/home/store';
-        `import {reducer as detailReducer} from '../pages/detail/store';
-        `import {reducer as loginReducer} from '../pages/login/store';
+        ```
+        import { combineReducers} from 'redux-immutable';
+        import {reducer as headerReducer} from '../common/header/store';
+        import {reducer as homeReducer} from '../pages/home/store';
+        import {reducer as detailReducer} from '../pages/detail/store';
+        import {reducer as loginReducer} from '../pages/login/store';
 
-        `const reducer = combineReducers({
-            `header:headerReducer,
-            `home: homeReducer,
-            `detail:detailReducer,
-            `login:loginReducer
-        `})
-        `export default reducer;
+        const reducer = combineReducers({
+            header:headerReducer,
+            home: homeReducer,
+            detail:detailReducer,
+            login:loginReducer
+        })
+        export default reducer;
+       ```
 
     2. 同用一个reducer
-        `const defaultState = {
-            `inputValue: '',
-            `list:[1,2],
-            `showMsg:false
-        `}
-        `export default (state = defaultState,action)=>{
-            `return state;
-        `}
+        ```
+        const defaultState = {
+            inputValue: '',
+            list:[1,2],
+            showMsg:false
+        }
+        export default (state = defaultState,action)=>{
+            return state;
+        }
+        ```
 4. 使用react-redux连接redux
     1. 在src下面的index.js用react-redux自带组件包裹App组件，传递store
-        `import {Provider} from 'react-redux';
-        `<Provider store ={store}>
-        `<App></App>
-        `</Provider>`
+    ```
+        import {Provider} from 'react-redux';
+        <Provider store ={store}>
+        <App></App>
+        </Provider>
+    ```
     2. 在需要使用state的component里面使用react-redux的connct方法连接store 和监听，如下
-        ` import {connect} from 'react-redux';
-        `const mapState = (state) =>(
-            `{
-           ` writerList:state.getIn(['home','writerList']),//这里用了immutablejs,大家不用管，只需要这个是连接state
-            `writerPage:state.getIn(['home','writerPage']),
-            `writerTotalPage:state.getIn(['home','writerTotalPage']),
-            `transform:state.getIn(['home','transform'])
-           ` }
-        `);
+        ```
+        import {connect} from 'react-redux';
+        const mapState = (state) =>(
+            {
+            writerList:state.getIn(['home','writerList']),//这里用了immutablejs,大家不用管，只需要这个是连接state
+            writerPage:state.getIn(['home','writerPage']),
+            writerTotalPage:state.getIn(['home','writerTotalPage']),
+            transform:state.getIn(['home','transform'])
+            }
+        );
 
-       ` const mapDispatch = (dispatch) =>({
-        `getWriterList(){
-            `dispatch(action)
+        const mapDispatch = (dispatch) =>({
+         getWriterList(){
+            dispatch(action)
             
-       ` },
-        `handleChangePage({
-            `if(){
+        },
+        handleChangePage({
+            if(){
                 
                 dispatch()
             }else{
                 dispatch())
             }
-        `}
-       ` });
-        `export default connect(mapState,mapDispatch)(Writer);//这里我的理解是，用connect这个回调函数传参然后运行 `
+        }
+        });
+        export default connect(mapState,mapDispatch)(Writer);//这里我的理解是，用connect这个回调函数传参然后运行 
+        ```
 
 5. 在组件里面使用 state 和dispatch
-    使用state:`this.props.xxxx 
-    同理使用dispatch:`this.props.xxxxx
+```
+    使用state:this.props.xxxx 
+    同理使用dispatch:this.props.xxxxx
+    
+    
+```
 
 
 
