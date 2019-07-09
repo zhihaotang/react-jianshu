@@ -34,7 +34,7 @@
 
 3. store 文件夹下新建 reducer.js 并声明各组件所需 state 中的变量(可以在不同的组件下创建不同的store,在总的reducer组合起来)
     1. 组合组件的reducer
-        ```
+```
         import { combineReducers} from 'redux-immutable';
         import {reducer as headerReducer} from '../common/header/store';
         import {reducer as homeReducer} from '../pages/home/store';
@@ -48,10 +48,10 @@
             login:loginReducer
         })
         export default reducer;
-       ```
+```
 
     2. 同用一个reducer
-        ```
+```
         const defaultState = {
             inputValue: '',
             list:[1,2],
@@ -60,17 +60,17 @@
         export default (state = defaultState,action)=>{
             return state;
         }
-        ```
+```
 4. 使用react-redux连接redux
     1. 在src下面的index.js用react-redux自带组件包裹App组件，传递store
-    ```
+```
         import {Provider} from 'react-redux';
         <Provider store ={store}>
         <App></App>
         </Provider>
-    ```
+```
     2. 在需要使用state的component里面使用react-redux的connct方法连接store 和监听，如下
-        ```
+```
         import {connect} from 'react-redux';
         const mapState = (state) =>(
             {
@@ -96,14 +96,12 @@
         }
         });
         export default connect(mapState,mapDispatch)(Writer);//这里我的理解是，用connect这个回调函数传参然后运行 
-        ```
+```
 
 5. 在组件里面使用 state 和dispatch
 ```
     使用state:this.props.xxxx 
     同理使用dispatch:this.props.xxxxx
-    
-    
 ```
 
 
